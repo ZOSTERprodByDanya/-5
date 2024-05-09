@@ -1,0 +1,35 @@
+import numpy as np
+import time
+import matplotlib.pyplot as plt
+
+def tabulate_function(N):
+    start_time = time.time()
+    x_values = np.linspace(0, 1, N)
+    f_values = 1 - ((x_values - N/2) / (N/2)) / 2
+    end_time = time.time()
+    return end_time - start_time
+
+sizes = [100, 1000, 10000, 100000]
+
+python_times = []
+for size in sizes:
+    python_times.append(tabulate_function(size))
+
+numpy_times = []
+for size in sizes:
+    start_time = time.time()
+    x_values = np.linspace(0, 1, size)
+    f_values = 1 - ((x_values - size/2) / (size/2)) / 2
+    end_time = time.time()
+    numpy_times.append(end_time - start_time)
+
+plt.plot(sizes, python_times, label='Python')
+plt.plot(sizes, numpy_times, label='NumPy')
+plt.title('Час табулювання функції')
+plt.xlabel('Розмір табуляції')
+plt.ylabel('Час (секунди)')
+plt.legend()
+plt.xscale('log')
+plt.yscale('log')
+plt.grid(True)
+plt.show()
